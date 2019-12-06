@@ -4,82 +4,90 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "count.c"
+
 typedef struct stack
 {
     int value;
     struct stack *next;
 } stack;
 
-typedef struct list
-{
-    int value;
-    struct list *next;
-} list;
 
 //-----------Stack functions-----------//
 
-int insertStack(stack **st)
+void insertStack(stack **st, count *c)
 {
-    int value, count;
+    int value;
+    int  ex;
     stack *new, *aux;
     new = (stack *) malloc(sizeof (stack) * 1);
 
-    printf("Value: ");
+    printf("\nValue: ");
     scanf("%d",&value);
     
     if (new == NULL)
         printf("Insertion error");
     else
     {
-    new->value = value;
-    new->next = NULL;    
+        new->value = value;
+        new->next = NULL;  
+        if (*st == NULL)
+        { 
+            *st = new;
+        }
+        else 
+        {
+            aux = *st;
+            while (aux->next != NULL)
+                aux = aux->next;
+            aux->next = new;
+        }  
+        c->stCount++;    
     }
     
-    if (*st == NULL)
-    { 
-        *st = new;
-    }
-    else 
-    {
-        aux = *st;
-        while (aux->next != NULL)
-            aux = aux->next;
-        aux->next = new;
-    }
-    printf("\n");
-    count = 1;
-    return count;
+    printf("\nType to exit: ");
+    scanf("%d",&ex);  
 }
 
-void alterStack (stack *st, int count)
+void alterStack (stack *st, count *c)
 {
     int i, pos;
+    int ex;
     printf("\nSet position: ");
-    scanf("%d",&pos);
-    if(pos > count-1)
+    scanf("%d", &pos);
+    if(pos > c->stCount - 1)
         printf("Unvalid position");
     else
     {
         stack *aux;
         aux = st;
-        for (i=0; i < pos; i++)
+        for (i = 0; i < pos; i++)
             aux = aux->next;
         printf("New value: ");
         scanf("%d",&aux->value);
     }
-    printf("\n");  
+    printf("\nType to exit: ");
+    scanf("%d",&ex);  
 }
 
-stack removeStack(stack **st)
+stack removeStack(stack **st, count *c)
 {
     stack *aux, *temp, copy;
-
-    if (st == NULL)
+    int value;
+    if ((*st) == NULL)
+    {
+        char ex;
+        printf("Empty List\nType to exit: ");
+        scanf("%c",&ex);
+        aux = *st;
+        return (*aux);
+    }
+    else if ((*st)->next == NULL)
     {
         copy = **st;
+        value = (*st)->value;
         free(*st);
-        *st = NULL;
-        return copy;
+        (*st) = NULL;
     }
     else
     {
@@ -92,26 +100,29 @@ stack removeStack(stack **st)
         copy = *temp;
         free(temp);
         aux->next = NULL;
-        return copy;
     }
+    c->stCount--;
 }
 
 void printStack(stack *st)
 {
+    int ex;
     if (st == NULL)
         printf("Empty stack");
     else
     {
         stack *aux;
         aux = st;
-        printf("Printed stack: ");
+        printf("\nPrinted stack: ");
         do
         {
             printf("%d\t",aux->value);
             aux = aux->next;
         } while (aux != NULL);
     }
-    printf("\n\n");  
+
+    printf("\nType to exit: ");
+    scanf("%d",&ex);  
 }
 
 #endif
