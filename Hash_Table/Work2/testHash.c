@@ -10,13 +10,31 @@ cada contexto avaliado (sugestão: utilize uma planilha eletrônica para tabular
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <getFile.c>
+#include "getFile.c"
 
+int generateInput()
+{
+    int inputSize = 20, inputType;
+    char fileName[30];
+    for(int i = 0; i < 3; i++)
+    {   
+        inputType = 1;
+        for(int j = 1; i <= 10; i++)
+        {
+            if(j == 6)
+                inputType = 2;
+            sprintf(fileName, "arq%d",j);
+            
+            createFile(inputSize,inputType,fileName);
+
+        }
+        inputSize += 30;
+    }
+}
 
 int main()
 {
-
-
+    generateInput();
     
     return 0;
 }

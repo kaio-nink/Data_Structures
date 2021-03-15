@@ -41,14 +41,14 @@ int checkEvenKey(int evenKey)
 }
 
 // File creation function
-void createFile(int inputSize, char inputType, char *fileName)
+void createFile(int inputSize, int inputType, char *fileName)
 {
     FILE *dataFile;
     int key;
     char value[4];
     
     strcat(fileName, ".txt");
-    puts(fileName);
+    //puts(fileName);
     dataFile = fopen(fileName, "w");
     
     if(dataFile == NULL)
@@ -61,7 +61,7 @@ void createFile(int inputSize, char inputType, char *fileName)
     {
         srand( (unsigned) i *time(NULL));
         
-        if(inputType == '1')
+        if(inputType == 1)
             key = checkEvenKey(key);
         else
             key = getRandomKey(key);
@@ -86,25 +86,25 @@ void createFile(int inputSize, char inputType, char *fileName)
 }
 
 
-int main()
-{
-    int inputSize;
-    char fileName[30], inputType;
+/*
+    For individual tests of this file, please, uncomment the main function
+    If used with testHash.c, comment this next part again
+*/
 
-    printf("\nNumber of itens: ");
-    scanf("%d",&inputSize);
-    printf("\nInput type (1-All key's values are even; 2- No restrictions): ");
-    scanf(" %c", &inputType);
-    while ((getchar()) != '\n');
-    printf("\nFile name: ");
-    fgets(fileName, sizeof(fileName), stdin);
-    fileName[ strcspn( fileName, "\n" ) ] = '\0';
+// int main(int argc, char const *argv[])
+// {
+//     int inputSize, inputType;
+//     char fileName[30];
 
-    if((inputType == '1' || inputType == '2'))
-        createFile(inputSize, inputType, fileName);    
+//     inputSize = atoi(argv[1]);
+//     inputType = atoi(argv[2]);
+//     strcpy(fileName, argv[3]);
 
-    return 0;
-}
+//     if((inputType == 1 || inputType == 2))
+//         createFile(inputSize, inputType, fileName);   
+    
+//     return 0;
+// }
 
 #endif
 
