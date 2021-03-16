@@ -45,10 +45,9 @@ void createFile(int inputSize, int inputType, char *fileName)
 {
     FILE *dataFile;
     int key;
-    char value[4];
+    char value[4] = "   ";
     
     strcat(fileName, ".txt");
-    //puts(fileName);
     dataFile = fopen(fileName, "w");
     
     if(dataFile == NULL)
@@ -56,16 +55,13 @@ void createFile(int inputSize, int inputType, char *fileName)
         printf("File Error\n");
     }
     setbuf(dataFile, NULL);
-
+    
     for (int i = 1; i <= inputSize; i++)
     {
-        srand( (unsigned) i *time(NULL));
-        
         if(inputType == 1)
             key = checkEvenKey(key);
         else
             key = getRandomKey(key);
-
 
         for (int c = 0; c < 3; c++)
         {
@@ -77,9 +73,8 @@ void createFile(int inputSize, int inputType, char *fileName)
 
         fprintf(dataFile, "%d ", key);
         fputs(value, dataFile);
-        fflush(dataFile);
         fprintf(dataFile,"\n");
-        strcpy(value, "  ");
+        strcpy(value, "   ");
 
     }
     fclose(dataFile);
@@ -94,12 +89,13 @@ void createFile(int inputSize, int inputType, char *fileName)
 // int main(int argc, char const *argv[])
 // {
 //     int inputSize, inputType;
-//     char fileName[30];
+//     char fileName[15];
 
 //     inputSize = atoi(argv[1]);
 //     inputType = atoi(argv[2]);
 //     strcpy(fileName, argv[3]);
 
+//     srand((unsigned int) argc * time(NULL));
 //     if((inputType == 1 || inputType == 2))
 //         createFile(inputSize, inputType, fileName);   
     
